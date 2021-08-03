@@ -1,4 +1,4 @@
-# Getting Started with Create React App
+# Army Robot Challenger Test
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
@@ -6,7 +6,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 In the project directory, you can run:
 
-### `npm start`
+### `npm run start`
 
 Runs the app in the development mode.\
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
@@ -14,7 +14,7 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 The page will reload if you make edits.\
 You will also see any lint errors in the console.
 
-### `npm test`
+### `npm run test`
 
 Launches the test runner in the interactive watch mode.\
 See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
@@ -39,32 +39,89 @@ Instead, it will copy all the configuration files and the transitive dependencie
 
 You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
 
-## Learn More
+## About project
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+This project Challenger is about a make 2 view whit this require:
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+### Vista 1 – Búsqueda y tabla
 
-### Code Splitting
+Vista principal con una tabla con todos los robots. En mobile debe
+mostrar solamente id y name; en desktop el id, name, salary y age.
+Además, los datos de la tabla deben poder filtrarse, con un search box
+por nombre, un slider por edad y un slider por salario. En el id de cada
+usuario debe haber un enlace a la vista 2.
+También se necesita un botón de LIMPIAR filtros.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+### Vista 2 – Detalles, edición y borrado
 
-### Analyzing the Bundle Size
+El equipo humano necesita una vista que muestre los detalles del robot
+que se seleccionó en la vista 1. Debe mostrar inputs de: id
+(deshabilitado), nombre, salario, edad e imagen. La imagen debe ser
+obtenida de este API: https://robohash.org/{employee_name}
+El nombre, salario y edad deben poder editarse. Y el request de
+actualización debe enviarse con un botón GUARDAR, para saber que
+el request se envió se necesita mostrar una notificación que muestre el
+message de la respuesta del API.
+También se necesita un botón BORRAR que envie el request DELETE, y
+mostrar la notificación con el message de la respuesta del API.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+## Considerations Web App
 
-### Making a Progressive Web App
+Utiliza el poder de
+ReactJS, si sabes
+AntD ¡Aún mejor!
+La creatividad está
+en ti, estilos y colores
+están totalmente a tu
+disposición.
+Recuerda que
+nuestro equipo
+humano necesita una
+interfaz con la mejor
+experiencia de
+usuario (user friendly).
+Considera que
+nuestro equipo
+utilizará la interfaz
+web desde su
+computadora, móvil
+y tablet (responsive).
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+## App.js
 
-### Advanced Configuration
+```
+import React, { useEffect, useState } from "react"
+import { useDispatch } from "react-redux"
+import { fetchData } from "./redux/dataRobots"
+import Home from "./pages/home"
+import Details from "./pages/details"
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+import "antd/dist/antd.css"
+import Header from "./components/header"
 
-### Deployment
+function App() {
+  const dispatch = useDispatch()
+  const [pagination, setPagination] = useState(true)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+  useEffect(() => {
+    const despachar = () => {
+      dispatch(fetchData())
+    }
+    despachar()
+  }, [dispatch])
 
-### `npm run build` fails to minify
+  const actualView = pagination ? (
+    <Home setPagination={setPagination} />
+  ) : (
+    <Details setPagination={setPagination} />
+  )
+  return (
+    <div>
+      <Header />
+      <div className="container h-screen">{actualView}</div>
+    </div>
+  )
+}
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+export default App
+```
