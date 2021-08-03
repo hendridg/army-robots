@@ -125,3 +125,15 @@ function App() {
 
 export default App
 ```
+
+## Vistas
+
+![Texto alternativo](public/images/view-1.png)
+![Texto alternativo](public/images/view-2.png)
+![Texto alternativo](public/images/view-3.png)
+![Texto alternativo](public/images/view-4.png)
+![Texto alternativo](public/images/view-5.jpg)
+![Texto alternativo](public/images/view-6.jpg)
+![Texto alternativo](public/images/view-7.jpg)
+![Texto alternativo](public/images/view-8.jpg)
+![Texto alternativo](public/images/view-9.jpg)
